@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Все документы{% endblock %}
+{% block content %}
+<h1 class="main-title">Все документы</h1>
+<div class="document-list">
+    {% if object_list %}
+        {% for document in object_list %}
+            <span class="doc-item">{{ document.title }}</span>
+            <br>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

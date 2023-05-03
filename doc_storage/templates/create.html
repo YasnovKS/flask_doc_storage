@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Новый документ{% endblock %}
+{% block content %}
+    <h1>Создать документ</h1>
+    <div class="card-body">
+        <form method="post" action="">
+            {% csrf_token %}
+            {% for field in form %}
+                <placeholder> {{ field.verbose_name }} </placeholder>
+                <p>{{ field }}</p>
+            {% endfor %}
+            {% if is_edit %}
+                <button type="submit" class="submit-button">
+                    Сохранить
+                </button>
+            {% else %}
+                <button type="submit" class="submit-button">
+                    Создать
+                </button>
+            {% endif %}
+        </form>
+        {% if is_edit %}
+            <div class="version last-version">
+                <span class="version-item">Последняя сохраненная версия</span>
+                <br>
+                <p class="version-content hidden">{{ version.content }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
