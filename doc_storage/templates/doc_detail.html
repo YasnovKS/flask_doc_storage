@@ -1,32 +1,27 @@
 {% extends 'base.html' %}
-{% block title %}{{ object.title }}{% endblock %}
+{% block title %}{{ obj.title }}{% endblock %}
 {% block content %}
-    <h1>{{ object.title }}</h1>
+    <h1>{{ obj.title }}</h1>
     <div class="content-block">
         <div class="document">
             <div class="doc-content">
-                {{ object.content }}
+                {{ obj.content }}
+                {% if obj.on_delete %}
+                    Помечен на удаление
+                {% endif %}
             </div>
-            {% if object.author == request.user %}
-                <a href="{% url 'docs:doc_edit' object.id %}"><button class="edit-btn">Редактировать</button></a>
-                <a href="{% url 'docs:doc_delete' object.id %}"><button class="del-btn">Пометить на удаление</button></a>
-            {% endif %}
         </div>
-        <div class="versions">
-            {% if versions %}
-                {% for version in versions %}
-                    <div class="version">
-                        <span class="version-item">Версия от {{ version.revision.date_created }}</span>
-                        <br>
-                        <p class="version-content hidden">{{ version.content }}</p>
-                        <br>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <div class="version">
-                    <span class="version-item">Более ранние версии этого документа отсутствуют</span>
-                </div>
-            {% endif %}
+        <div>
+            {% for version in versions %}
+                {{ version.title }} {{ version.content }}
+            {% endfor %}
         </div>
     </div>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import BooleanField, StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length
 
 
@@ -19,4 +19,5 @@ class DocForm(FlaskForm):
                 message='Обязательно для заполнения'),
         ]
     )
+    on_delete = BooleanField('Пометить на удаление')
     submit = SubmitField('Создать')
