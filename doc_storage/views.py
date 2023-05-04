@@ -31,7 +31,7 @@ def create_document():
 
 @app.route('/document/<int:id>/')
 def document_detail(id):
-    document = Document.get(Document.id == id)
+    document = Document.get_by_id(id)
     versions = document.versions.order_by(Version.date.desc())
     versions = [version.to_dict() for version in versions]
     context = {
@@ -43,7 +43,7 @@ def document_detail(id):
 
 @app.route('/document/<int:id>/update', methods=['GET', 'POST'])
 def document_update(id):
-    document = Document.get(Document.id == id)
+    document = Document.get_by_id(id)
     form = DocForm(obj=document)
     context = {
         'form': form,
@@ -67,7 +67,7 @@ def document_update(id):
 
 @app.route('/document/<int:id>/delete/')
 def document_delete(id):
-    document = Document.get(Document.id == id)
+    document = Document.get_by_id(id)
     if not document.on_delete:
         flash(delete_document_error)
         return redirect(url_for('document_detail', id=id))
